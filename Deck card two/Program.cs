@@ -6,114 +6,108 @@ namespace Deck_card
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main ( string [] args )
         {
-            Player player = new Player();
-            Deck deck = new Deck();
-            player.Work(deck);
+            Player player = new Player ();
+            Deck deck = new Deck ();
+            player.Work ( deck );
         }
     }
 
     class Player
     {
-        private List<Card> _cardsPlayer = new List<Card>();
+        private List<Card> _cardsPlayer = new List<Card> ();
 
-        public void TakeCardPlayer(Deck deckCard)
+        public void TakeCardPlayer ( Deck deckCard )
         {
-            Random random = new Random();
-            int maxNumber = deckCard.CopyDeck().Count;
+            Random random = new Random ();
+            int maxNumber = deckCard.CopyDeck ().Count;
 
-            if ( deckCard.CopyDeck().Count >= 1 )
+            if ( deckCard.CopyDeck ().Count >= 1 )
             {
-                Console.Write($"В колоде {deckCard.CopyDeck().Count} карт.\nСколько хотете взять карт?\t");
-                int numberOfcards = int.Parse(Console.ReadLine());
+                Console.Write ( $"В колоде {deckCard.CopyDeck ().Count} карт.\nСколько хотете взять карт?\t" );
+                int numberOfcards = int.Parse ( Console.ReadLine () );
 
-                if (numberOfcards <= maxNumber)
+                if ( numberOfcards <= maxNumber )
                 {
-                    for (int i = 0; i < numberOfcards; i++)
+                    for ( int i = 0; i < numberOfcards; i++ )
                     {
-                        int rand = random.Next(deckCard.CopyDeck().Count);
+                        int rand = random.Next ( deckCard.CopyDeck ().Count );
 
-                        _cardsPlayer.Add(deckCard.CopyDeck()[rand]);
-                        deckCard.DeleteCard(rand);
+                        _cardsPlayer.Add ( deckCard.CopyDeck () [ rand ] );
+                        deckCard.DeleteCard ( rand );
                     }
                 }
 
-                else Console.WriteLine("Некорректное значение");
+                else Console.WriteLine ( "Некорректное значение" );
             }
 
-            Clear();
+            Clear ();
         }
 
-        public void ShowCardPlayer()
+        public void ShowCardPlayer ()
         {
-            if (CopyDeck().Count >= 1)
+            if ( CopyDeck ().Count >= 1 )
             {
-                Console.WriteLine("Ваши карты");
+                Console.WriteLine ( "Ваши карты" );
 
-                for (int i = 0; i < CopyDeck().Count; i++)
+                for ( int i = 0; i < CopyDeck ().Count; i++ )
                 {
-                    CopyDeck()[i].ShowDitalis();
+                    CopyDeck () [ i ].ShowDitalis ();
                 }
             }
 
-            else Console.WriteLine("У вас нет карт");
+            else Console.WriteLine ( "У вас нет карт" );
 
-            Clear();
+            Clear ();
         }
 
-        public List<Card> CopyDeck()
-        {
-            List<Card> cards = _cardsPlayer.ToList();
-            return cards;
-        }
-
-        public void Work(Deck deckCard)
+        public void Work ( Deck deckCard )
         {
 
-            string[] menu = { "Взять карту", "Посмотреть все карты", "Показать карты на руках", "Выход" };
+            string [] menu = { "Взять карту", "Посмотреть все карты", "Показать карты на руках", "Выход" };
             int index = 0;
             bool launchingTheProgram = true;
 
-            while (launchingTheProgram)
+            while ( launchingTheProgram )
             {
-                Console.SetCursorPosition(0, 0);
-                Console.ResetColor();
-                Console.WriteLine("\t\tМеню");
+                Console.SetCursorPosition ( 0, 0 );
+                Console.ResetColor ();
+                Console.WriteLine ( "\t\tМеню" );
 
-                for (int i = 0; i < menu.Length; i++)
+                for ( int i = 0; i < menu.Length; i++ )
                 {
-                    if (index == i)
+                    if ( index == i )
                     {
                         Console.BackgroundColor = ConsoleColor.Yellow;
                         Console.ForegroundColor = ConsoleColor.Black;
                     }
-                    Console.WriteLine(menu[i]);
-                    Console.ResetColor();
+                    Console.WriteLine ( menu [ i ] );
+                    Console.ResetColor ();
                 }
 
-                ConsoleKeyInfo userInput = Console.ReadKey(true);
+                ConsoleKeyInfo userInput = Console.ReadKey ( true );
 
-                switch (userInput.Key)
+                switch ( userInput.Key )
                 {
                     case ConsoleKey.UpArrow:
-                        if (index != 0) index--;
+                        if ( index != 0 ) index--;
                         break;
                     case ConsoleKey.DownArrow:
-                        if (index != menu.Length - 1) index++;
+                        if ( index != menu.Length - 1 ) index++;
                         break;
                     case ConsoleKey.Enter:
 
-                        switch (index)
+                        switch ( index )
                         {
                             case 0:
-                                TakeCardPlayer(deckCard);
+                                TakeCardPlayer ( deckCard );
                                 break;
                             case 1:
-                                deckCard.ShowCard();
+                                deckCard.ShowCard ();
                                 break;
                             case 2:
-                                ShowCardPlayer();
+                                ShowCardPlayer ();
                                 break;
                             case 3:
                                 launchingTheProgram = !launchingTheProgram;
@@ -124,23 +118,29 @@ namespace Deck_card
             }
         }
 
-        public void Clear()
+        private List<Card> CopyDeck ()
         {
-            Console.ReadKey();
+            List<Card> cards = _cardsPlayer.ToList ();
+            return cards;
+        }
+
+        private void Clear ()
+        {
+            Console.ReadKey ();
             int numberVacation = 5;
             int numberOfRepetitions = 20;
-            Console.SetCursorPosition(0, numberVacation);
+            Console.SetCursorPosition ( 0, numberVacation );
 
-            for (int i = 0; i < numberOfRepetitions; i++)
+            for ( int i = 0; i < numberOfRepetitions; i++ )
             {
-                Console.WriteLine("\t\t\t\t\t\t\t\t\t");
+                Console.WriteLine ( "\t\t\t\t\t\t\t\t\t" );
             }
         }
     }
 
     class Card
     {
-        public Card(string name, int numberRand)
+        public Card ( string name, int numberRand )
         {
             Name = name;
             NumberRand = numberRand;
@@ -149,64 +149,64 @@ namespace Deck_card
         public string Name { get; private set; }
         public int NumberRand { get; private set; }
 
-        public void ShowDitalis()
+        public void ShowDitalis ()
         {
-            Console.WriteLine($"Масть {Name} {NumberRand}");
+            Console.WriteLine ( $"Масть {Name} {NumberRand}" );
         }
     }
 
     class Deck
     {
-        private List<Card> _cards = new List<Card>();
+        private List<Card> _cards = new List<Card> ();
 
-        public Deck()
+        public Deck ()
         {
-            _cards.Add(new Card("Буба", 7));
-            _cards.Add(new Card("Пика", 9));
-            _cards.Add(new Card("Крест", 10));
-            _cards.Add(new Card("Чирва", 8));
-            _cards.Add(new Card("Крест", 7));
-            _cards.Add(new Card("Пика", 10));
-            _cards.Add(new Card("Буба", 8));
-            _cards.Add(new Card("Чирва", 9));
+            _cards.Add ( new Card ( "Буба", 7 ) );
+            _cards.Add ( new Card ( "Пика", 9 ) );
+            _cards.Add ( new Card ( "Крест", 10 ) );
+            _cards.Add ( new Card ( "Чирва", 8 ) );
+            _cards.Add ( new Card ( "Крест", 7 ) );
+            _cards.Add ( new Card ( "Пика", 10 ) );
+            _cards.Add ( new Card ( "Буба", 8 ) );
+            _cards.Add ( new Card ( "Чирва", 9 ) );
         }
 
-        public void DeleteCard(int numberDelete)
+        public void DeleteCard ( int numberDelete )
         {
-            _cards.RemoveAt(numberDelete);
+            _cards.RemoveAt ( numberDelete );
         }
 
-        public List<Card> CopyDeck()
+        public List<Card> CopyDeck ()
         {
-            List<Card> cards = _cards.ToList();
+            List<Card> cards = _cards.ToList ();
             return cards;
         }
 
-        public void ShowCard()
+        public void ShowCard ()
         {
-            if (CopyDeck().Count >= 1)
+            if ( CopyDeck ().Count >= 1 )
             {
-                Console.WriteLine("Все карты");
+                Console.WriteLine ( "Все карты" );
 
-                for (int i = 0; i < CopyDeck().Count; i++)
+                for ( int i = 0; i < CopyDeck ().Count; i++ )
                 {
-                    CopyDeck()[i].ShowDitalis();
+                    CopyDeck () [ i ].ShowDitalis ();
                 }
             }
 
-            else Console.WriteLine("Карт больше нет!");
+            else Console.WriteLine ( "Карт больше нет!" );
 
-            Clear();
+            Clear ();
         }
 
-        public void Clear()
+        private void Clear ()
         {
-            Console.ReadKey();
+            Console.ReadKey ();
             int numberVacation = 5;
             int numberOfRepetitions = 20;
-            Console.SetCursorPosition(0, numberVacation);
+            Console.SetCursorPosition ( 0, numberVacation );
 
-            for (int i = 0; i < numberOfRepetitions; i++)
+            for ( int i = 0; i < numberOfRepetitions; i++ )
             {
                 Console.WriteLine ( "\t\t\t\t\t\t\t\t\t" );
             }
