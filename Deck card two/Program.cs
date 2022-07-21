@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,14 +21,14 @@ namespace Deck_card
         public void TakeCardPlayer(Deck deckCard)
         {
             Random random = new Random();
-            byte maxNumber = 8;
+            int maxNumber = deckCard.CopyDeck().Count;
 
-            if (deckCard.CopyDeck().Count >= 1)
+            if ( deckCard.CopyDeck().Count >= 1 )
             {
                 Console.Write($"В колоде {deckCard.CopyDeck().Count} карт.\nСколько хотете взять карт?\t");
                 int numberOfcards = int.Parse(Console.ReadLine());
 
-                if (numberOfcards <= maxNumber && numberOfcards > 0 && numberOfcards < deckCard.CopyDeck().Count)
+                if (numberOfcards <= maxNumber)
                 {
                     for (int i = 0; i < numberOfcards; i++)
                     {
@@ -41,6 +41,8 @@ namespace Deck_card
 
                 else Console.WriteLine("Некорректное значение");
             }
+
+            Clear();
         }
 
         public void ShowCardPlayer()
@@ -56,6 +58,8 @@ namespace Deck_card
             }
 
             else Console.WriteLine("У вас нет карт");
+
+            Clear();
         }
 
         public List<Card> CopyDeck()
@@ -73,8 +77,6 @@ namespace Deck_card
 
             while (launchingTheProgram)
             {
-                Clear();
-
                 Console.SetCursorPosition(0, 0);
                 Console.ResetColor();
                 Console.WriteLine("\t\tМеню");
@@ -193,7 +195,23 @@ namespace Deck_card
             }
 
             else Console.WriteLine("Карт больше нет!");
+
+            Clear();
         }
+
+        public void Clear()
+        {
+            Console.ReadKey();
+            int numberVacation = 5;
+            int numberOfRepetitions = 20;
+            Console.SetCursorPosition(0, numberVacation);
+
+            for (int i = 0; i < numberOfRepetitions; i++)
+            {
+                Console.WriteLine ( "\t\t\t\t\t\t\t\t\t" );
+            }
+        }
+
     }
 }
 /*Есть колода с картами. Игрок достает карты, пока не решит, что ему хватит карт 
