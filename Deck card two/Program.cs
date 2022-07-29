@@ -18,50 +18,6 @@ namespace Deck_card
     {
         private List<Card> _cardsPlayer = new List<Card> ();
 
-        public void TakeCardPlayer ( Deck deckCard )
-        {
-            Random random = new Random ();
-            int maxNumber = deckCard.CopyDeck ().Count;
-
-            if ( deckCard.CopyDeck ().Count >= 1 )
-            {
-                Console.Write ( $"В колоде {deckCard.CopyDeck ().Count} карт.\nСколько хотете взять карт?\t" );
-                int numberOfcards = int.Parse ( Console.ReadLine () );
-
-                if ( numberOfcards <= maxNumber )
-                {
-                    for ( int i = 0; i < numberOfcards; i++ )
-                    {
-                        int rand = random.Next ( deckCard.CopyDeck ().Count );
-
-                        _cardsPlayer.Add ( deckCard.CopyDeck () [ rand ] );
-                        deckCard.DeleteCard ( rand );
-                    }
-                }
-
-                else Console.WriteLine ( "Некорректное значение" );
-            }
-
-            Clear ();
-        }
-
-        public void ShowCardPlayer ()
-        {
-            if ( CopyDeck ().Count >= 1 )
-            {
-                Console.WriteLine ( "Ваши карты" );
-
-                for ( int i = 0; i < CopyDeck ().Count; i++ )
-                {
-                    CopyDeck () [ i ].ShowDitalis ();
-                }
-            }
-
-            else Console.WriteLine ( "У вас нет карт" );
-
-            Clear ();
-        }
-
         public void Work ( Deck deckCard )
         {
 
@@ -70,7 +26,7 @@ namespace Deck_card
             bool launchingTheProgram = true;
 
             while ( launchingTheProgram )
-            {
+            { 
                 Console.SetCursorPosition ( 0, 0 );
                 Console.ResetColor ();
                 Console.WriteLine ( "\t\tМеню" );
@@ -107,7 +63,7 @@ namespace Deck_card
                                 deckCard.ShowCard ();
                                 break;
                             case 2:
-                                ShowCardPlayer ();
+                                ShowCardPlayer ( deckCard );
                                 break;
                             case 3:
                                 launchingTheProgram = !launchingTheProgram;
@@ -124,17 +80,52 @@ namespace Deck_card
             return cards;
         }
 
-        private void Clear ()
+        private void TakeCardPlayer ( Deck deckCard )
         {
-            Console.ReadKey ();
-            int numberVacation = 5;
-            int numberOfRepetitions = 20;
-            Console.SetCursorPosition ( 0, numberVacation );
+            Random random = new Random ();
+            int maxNumber = deckCard.CopyDeck ().Count;
 
-            for ( int i = 0; i < numberOfRepetitions; i++ )
+            if ( deckCard.CopyDeck ().Count >= 1 )
             {
-                Console.WriteLine ( "\t\t\t\t\t\t\t\t\t" );
+                Console.Write ( $"В колоде {deckCard.CopyDeck ().Count} карт.\nСколько хотете взять карт?\t" );
+                int numberOfcards = int.Parse ( Console.ReadLine () );
+
+                if ( numberOfcards <= maxNumber )
+                {
+                    for ( int i = 0; i < numberOfcards; i++ )
+                    {
+                        int rand = random.Next ( deckCard.CopyDeck ().Count );
+
+                        _cardsPlayer.Add ( deckCard.CopyDeck () [ rand ] );
+                        deckCard.DeleteCard ( rand );
+                    }
+                }
+
+                else
+                {
+                    Console.WriteLine ( "Некорректное значение" );
+                }
             }
+            deckCard.Clear ();
+        }
+
+        private void ShowCardPlayer ( Deck deckCard )
+        {
+            if ( CopyDeck ().Count >= 1 )
+            {
+                Console.WriteLine ( "Ваши карты" );
+
+                for ( int i = 0; i < CopyDeck ().Count; i++ )
+                {
+                    CopyDeck () [ i ].ShowDitalis ();
+                }
+            }
+
+            else
+            {
+                Console.WriteLine ( "У вас нет карт" );
+            }
+            deckCard.Clear ();
         }
     }
 
@@ -194,12 +185,14 @@ namespace Deck_card
                 }
             }
 
-            else Console.WriteLine ( "Карт больше нет!" );
-
+            else
+            {
+                Console.WriteLine ( "Карт больше нет!" );
+            }
             Clear ();
         }
 
-        private void Clear ()
+        public void Clear ()
         {
             Console.ReadKey ();
             int numberVacation = 5;
@@ -211,7 +204,6 @@ namespace Deck_card
                 Console.WriteLine ( "\t\t\t\t\t\t\t\t\t" );
             }
         }
-
     }
 }
 /*Есть колода с картами. Игрок достает карты, пока не решит, что ему хватит карт 
